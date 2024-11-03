@@ -1,4 +1,4 @@
-# Turtlesim_CW1_MyControllers
+# turtlesim_my_controllers_pde4430_cw1
 
 **Coursework 01 for Mudule: PDE4430 Mobile Robotics 2024-2025**.Tasks to be complete as follows;
 1. Teleoperation using the keyboard, with an option to change movement speed  
