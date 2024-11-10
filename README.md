@@ -23,6 +23,8 @@
 
 ## Task 02 - Autonomous navigation to any given coordinate in the Turtlesim window 
 
+>> File : `turtlesim_achive_target.py`
+
 ## Task 03 - Avoiding wall collision – Override movement if wall hitting is imminent 
 
 ## Task 04 - Vacuum Cleaning behaviour – Covering the entire window in an efficient manner 
