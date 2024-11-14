@@ -13,7 +13,7 @@ def init_node():
     return target_publisher, rate
 
 def update_pose(data):
-    # Get the value in topic t see the current cordinates
+    # Get the value in topic to see the current cordinates
     # Get the x and y cordinates of the position - Will be assigned to global variable
     global pose
     pose = data

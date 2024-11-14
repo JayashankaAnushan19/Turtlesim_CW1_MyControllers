@@ -27,12 +27,20 @@
 *Note:* This task indicating to develop a program to move the bot to given cordinates.
 
 1. **Objective:** Bot should navigate the given cordinates from currect position.
-2. **Implementation Note** This task has been developed to move the turtlesim bot to the given target from the currect position. Used Pythagorean theorem to calculate the distance and depend on the distance bot will change the speed (Added a contant value to change the speed). If the target is too far, bot will move faster and if the target is close, bot will move slowly to achive the target cordinates accuratly.
+2. **Implementation Note** This task has been developed to move the turtlesim bot to the given target from the currect position. Used Pythagorean theorem to calculate the distance and depend on the distance bot will change the speed (Added a constant value to change the speed). If the target is too far, bot will move faster and if the target is close, bot will move slowly to achive the target cordinates accuratly.
 
 >> File : `turtlesim_achive_target.py`
 
 
 ## Task 03 - Avoiding wall collision – Override movement if wall hitting is imminent 
+
+*Note:* This task indicating to develop a program to move the bot to given cordinates. But bot should not cross the defined boundries and alert the user as bot arrived to boundry.
+
+1. **Objective:** Define the imaginary boundry, able to move the bot and Bot should stop when arrive the boundry and alert the user.
+2. **Implementation Note** 
+
+>> File : `turtlesim_travelWithBoundries.py`
+
 
 ## Task 04 - Vacuum Cleaning behaviour – Covering the entire window in an efficient manner 
 
