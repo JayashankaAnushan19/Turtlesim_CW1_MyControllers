@@ -37,7 +37,7 @@
 *Note:* This task indicating to develop a program to move the bot to given cordinates. But bot should not cross the defined boundries and alert the user as bot arrived to boundry.
 
 1. **Objective:** Define the imaginary boundry, able to move the bot and Bot should stop when arrive the boundry and alert the user.
-2. **Implementation Note** 
+2. **Implementation Note** This task will take the arguments from the user to set the boundries first and later user can control the bot using arrow keys or 'AWSD' keys. Speed will control by '+' and '-' to increase or decrease.
 
 >> File : `turtlesim_travelWithBoundries.py`
 
