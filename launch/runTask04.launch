@@ -1,0 +1,7 @@
+<launch>
+<!-- Start the turtlesim -->
+<node name="Turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
+<!-- Run the teleop_key using keyboard -->
+<node name="Task_04_-Single_Vaccum_Cleaner" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_vacuumCleaningBehaviour.py" output="screen"/>
+
+</launch>

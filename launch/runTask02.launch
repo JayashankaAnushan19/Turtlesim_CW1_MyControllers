@@ -1,0 +1,7 @@
+<launch>
+    <!-- Launch the Turtlesim node -->
+    <node name="turtlesim_node" pkg="turtlesim" type="turtlesim_node" output="log"/>
+  
+    <!-- Launch your custom script -->
+    <node name="turtlesim_achive_target" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_achive_target.py" output="screen"/>
+</launch>
