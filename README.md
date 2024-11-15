@@ -44,6 +44,12 @@
 
 ## Task 04 - Vacuum Cleaning behaviour – Covering the entire window in an efficient manner 
 
+1. **Objective:** Entered turtlesim bot need to behave as a vaccum clearner. Need to conver entire area.
+2. **Implementation Note** 
+
+>> File : `turtlesim_vacuumCleaningBehaviour.py`
+
+
 ## Task 05 - Multiple turtles vacuum cleaning behaviour
 
 *Developer note: 2 is good, 3 or more is great* 
