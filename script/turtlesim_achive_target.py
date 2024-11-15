@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rospy
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
@@ -39,34 +40,48 @@ def angular_vel(target_pose, constant=6):
     # Used constant value to determine the speed depend on the distance
     return constant * (steering_angle(target_pose) - pose.theta)
 
-def goToTarget():
+def main():
     try:
-        target_publisher, rate = init_node()
-        
-        target_pose = Pose()
-        target_pose.x = float(input("Enter the x goal: "))
-        target_pose.y = float(input("Enter the y goal: "))
-        distance_tolerance = float(input("Enter the tolerance: "))
+        while not rospy.is_shutdown():
+                target_publisher, rate = init_node()
+            
+                target_pose = Pose()
+                target_pose.x = float(input("Enter the x goal: "))
 
-        vel_msg = Twist()
+                while target_pose.x < 0 or target_pose.x > 11:
+                    print("--------Invalid input. Please re-enter the x-goal (Between 0 to 11).")
+                    target_pose.x = float(input("Enter the x goal: "))
 
-        while direct_distance(target_pose) >= distance_tolerance:
-            vel_msg.linear.x = linear_vel(target_pose)
-            vel_msg.linear.y = 0
-            vel_msg.linear.z = 0
+                target_pose.y = float(input("Enter the y goal: "))
 
-            vel_msg.angular.x = 0
-            vel_msg.angular.y = 0
-            vel_msg.angular.z = angular_vel(target_pose)
+                while target_pose.y < 0 or target_pose.y > 11:
+                    print("--------Invalid input. Please re-enter the y-goal (Between 0 to 11).")
+                    target_pose.y = float(input("Enter the y goal: "))
 
-            target_publisher.publish(vel_msg)
-            rate.sleep()
+                # distance_tolerance = float(input("Enter the tolerance: "))
+                distance_tolerance = 0.01
 
-        vel_msg.linear.x = 0
-        vel_msg.angular.z = 0
-        target_publisher.publish(vel_msg)
+                vel_msg = Twist()
 
-        rospy.spin()
+                while direct_distance(target_pose) >= distance_tolerance:
+                    rospy.loginfo(f"Still moving. {direct_distance(target_pose)} |>=| {distance_tolerance}")
+                    vel_msg.linear.x = linear_vel(target_pose)
+                    vel_msg.linear.y = 0
+                    vel_msg.linear.z = 0
+
+                    vel_msg.angular.x = 0
+                    vel_msg.angular.y = 0
+                    vel_msg.angular.z = angular_vel(target_pose)
+
+                    target_publisher.publish(vel_msg)
+                    rate.sleep()
+                rospy.loginfo("Going to End moving")
+                vel_msg.linear.x = 0
+                vel_msg.angular.z = 0
+                target_publisher.publish(vel_msg)
+                # rospy.spin()
+                rospy.loginfo("End moving")
+                break
     
     except Exception as e:
         print(e)
@@ -76,10 +91,11 @@ def goToTarget():
         vel_msg.linear.x = 0
         vel_msg.angular.z = 0
         target_publisher.publish(vel_msg)
+        
 
 
 if __name__ == '__main__':
     try:
-        goToTarget()
+        main()
     except rospy.ROSInterruptException:
         pass
