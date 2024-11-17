@@ -1,7 +1,45 @@
 <launch>
-<!-- Start the turtlesim -->
-<node name="Turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
-<!-- Run the teleop_key using keyboard -->
-<node name="Task_04_-Single_Vaccum_Cleaner" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_vacuumCleaningBehaviour.py" output="screen"/>
+    <!-- Launch the Turtlesim node -->
+    <node name="vacuum_cleaner_0" pkg="turtlesim" type="turtlesim_node" output="screen"/>
+
+    <!-- Launch your custom vacuum cleaning script for each turtle -->
+    <node name="vacuum_cleaner_1" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_multivacuumCleaners.py" output="screen">
+        <param name="turtle_name" value="turtle1"/>
+        <param name="turtle_x" value="2.0"/>
+        <param name="turtle_y" value="3.0"/>
+        <param name="left_boundary" value="0"/>
+        <param name="right_boundary" value="4"/>
+        <param name="bottom_boundary" value="5"/>
+        <param name="upper_boundary" value="11"/>
+    </node>
+    <node name="vacuum_cleaner_2" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_multivacuumCleaners.py" output="screen">
+        <param name="turtle_name" value="turtle2"/>
+        <param name="turtle_x" value="3.0"/>
+        <param name="turtle_y" value="4.0"/>
+        <param name="left_boundary" value="4"/>
+        <param name="right_boundary" value="11"/>
+        <param name="bottom_boundary" value="5"/>
+        <param name="upper_boundary" value="11"/>
+    </node>
+    <node name="vacuum_cleaner_3" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_multivacuumCleaners.py" output="screen">
+        <param name="turtle_name" value="turtle3"/>
+        <param name="turtle_x" value="5.0"/>
+        <param name="turtle_y" value="6.0"/>
+        <param name="left_boundary" value="0"/>
+        <param name="right_boundary" value="5"/>
+        <param name="bottom_boundary" value="0"/>
+        <param name="upper_boundary" value="5"/>
+    </node>
+     <node name="vacuum_cleaner_4" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_multivacuumCleaners.py" output="screen">
+        <param name="turtle_name" value="turtle4"/>
+        <param name="turtle_x" value="7.0"/>
+        <param name="turtle_y" value="8.0"/>
+        <param name="left_boundary" value="5"/>
+        <param name="right_boundary" value="11"/>
+        <param name="bottom_boundary" value="0"/>
+        <param name="upper_boundary" value="5"/>
+    </node>
 
 </launch>
+
+ 
