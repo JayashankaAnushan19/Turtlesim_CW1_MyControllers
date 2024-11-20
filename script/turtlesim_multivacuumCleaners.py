@@ -4,18 +4,11 @@ from turtlesim.srv import TeleportAbsolute, Spawn
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 import math
-import sys, termios
 
 
 # Parameters
 speed = 0.5  # Linear speed
 rad90 = (90 * math.pi) / 180  # 90 degrees in radians
-
-# Define the boundary limits for the turtlesim window
-# left_boundary = 0
-# right_boundary = 11
-# bottom_boundary = 0
-# upper_boundary = 11
 
 # Keep the positions in global
 current_pose = Pose()  # To store the current position of the bot
@@ -80,7 +73,7 @@ def clearniner_behavior(turtle_name, turtle_x, turtle_y, left_boundary, right_bo
     # Create a service proxy for 'teleport_absolute'
     teleport_service = rospy.ServiceProxy(f'/{turtle_name}/teleport_absolute', TeleportAbsolute)
     # Teleport the turtle to the random coordinates
-    teleport_service(left_boundary, bottom_boundary, 0)
+    teleport_service(left_boundary + 0.5, bottom_boundary + 0.5, 0)
 
     rate = rospy.Rate(10)  # Loop rate of 10 Hz
 

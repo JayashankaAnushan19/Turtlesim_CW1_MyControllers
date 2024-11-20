@@ -27,7 +27,7 @@ move_cmd = Twist()  # To store movement commands
 def move_bot_to_start_point():
     rospy.wait_for_service('/turtle1/teleport_absolute')
     move_bot = rospy.ServiceProxy('/turtle1/teleport_absolute', TeleportAbsolute)
-    # Move the turtle to (0.5, 0.5) with 0 orientation
+    # Move the turtle to (0.5, 0.5) with 0 orientation to start the process
     move_bot(left_boundary + 0.5, bottom_boundary + 0.5, 0)
 
 # Callback to update the current position
@@ -65,7 +65,7 @@ def main():
     rospy.Subscriber('/turtle1/pose', Pose, get_current_position)
 
     move_bot_to_start_point()  # Move the bot to the starting point
-    rate = rospy.Rate(10)  # Loop rate of 10 Hz
+    rate = rospy.Rate(20)  # Loop rate of 10 Hz
 
     try:
         direction = 1  # Start by moving to the right

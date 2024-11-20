@@ -1,5 +1,8 @@
 
 # Testing file not to be track
 unitTest.py
+unitTest-Task03.py
 script/unitTest-Task03.py
 
+# Testing files folders not to be track
+script/tempRemoved
