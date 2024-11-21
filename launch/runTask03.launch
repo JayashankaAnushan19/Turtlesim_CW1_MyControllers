@@ -1,6 +1,6 @@
 <launch>
     <!-- Launch the Turtlesim node -->
-    <node name="Turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
+    <node name="turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
     <!-- Launch Travel with boundry script -->
-    <node name="Task_03_-Travel_With_Boundries" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_travelWithBoundries.py" output="screen"/>
+    <node name="turtlesim_tavel_with_boundries" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_travelWithBoundries.py" output="screen"/>
 </launch>
