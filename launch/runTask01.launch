@@ -1,7 +1,7 @@
 <launch>
     <!-- Start the turtlesim -->
-    <node name="Turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
+    <node name="turtlesim" pkg="turtlesim" type="turtlesim_node" output="log"/>  
 
     <!-- Run the teleop_key using keyboard -->
-    <node name="Task_01_-_My_Teleop_Key" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_myteleop_key.py" output="screen"/>
+    <node name="turtlesim_my_teleop_Key" pkg="turtlesim_my_controllers_pde4430_cw1" type="turtlesim_myteleop_key.py" output="screen"/>
 </launch>
