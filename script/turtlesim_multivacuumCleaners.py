@@ -42,8 +42,7 @@ def clearner_positioning(turtle_name, turtle_x, turtle_y):
     turtle_x = turtle_x 
     turtle_y = turtle_y 
 
-    print(f"{turtle_name} Bot | X : {turtle_x} | Y : {turtle_y}")
-    print(f"Test cordinate {turtle_x}")
+    print(f"{turtle_name} Bot at X : {turtle_x} | Y : {turtle_y}")
 
     # Ensure the x and y are floats
     turtle_x = float(turtle_x)
@@ -62,13 +61,40 @@ def clearner_positioning(turtle_name, turtle_x, turtle_y):
     except rospy.ServiceException as e:
         rospy.logerr("Service call failed: %s" % e)
 
+def turn_to_angle(angle_offset, pub, rate):
+    global current_pose  
+
+    # Calculate the target angle and normalize it
+    target_angle = current_pose.theta + angle_offset
+    # Normalize to [-90, 90]
+    target_angle = math.atan2(math.sin(target_angle), math.cos(target_angle))  
+    
+
+    while not rospy.is_shutdown():
+        # Calculate the angular error
+        error = target_angle - current_pose.theta
+        error = math.atan2(math.sin(error), math.cos(error))  # Normalize to [-π, π]
+
+        # If the error is within tolerance, stop turning
+        if abs(error) < 0.001:  # Tolerance for angle. 0.001 for better accuracy
+            break
+
+        # Proportional control for smooth turning
+        angular_speed = 2.0 * error  # Adjust gain as necessary
+        move_robot(0, angular_speed)
+        pub.publish(move_cmd)
+        rate.sleep()
+
+    # Stop the robot after turning
+    move_robot(0, 0)
+    pub.publish(move_cmd)
 
 def clearniner_behavior(turtle_name, turtle_x, turtle_y, left_boundary, right_boundary, bottom_boundary, upper_boundary):
     # rospy.init_node(f'vacuum_cleaner_bot + {turtle_name}')
     pub = rospy.Publisher(f'/{turtle_name}/cmd_vel', Twist, queue_size=10)
     rospy.Subscriber(f'/{turtle_name}/pose', Pose, get_current_position)
-
-    print(f"Bot Started : {turtle_name}")
+    
+    print(f"{turtle_name} Bot Started cleaning.")
 
     # Create a service proxy for 'teleport_absolute'
     teleport_service = rospy.ServiceProxy(f'/{turtle_name}/teleport_absolute', TeleportAbsolute)
@@ -92,53 +118,42 @@ def clearniner_behavior(turtle_name, turtle_x, turtle_y, left_boundary, right_bo
                 pub.publish(move_cmd)
                 rate.sleep()  # Maintain the loop rate
 
-            # If a boundary is about to be crossed, stop the bot
-            move_robot(0, 0)
-            pub.publish(move_cmd)
-
             if direction > 0:
                 # Move up to the next row
-                rospy.loginfo(f"----------[{turtle_name}] :: Turning left - anticlockwise.")
-                move_robot(0, rad90)  # Turn 90 degrees anticlockwise
-                pub.publish(move_cmd)
-                rospy.sleep(2)
+                print(f"----------[{turtle_name}] :: Turning left - anticlockwise.")
+                turn_to_angle(rad90, pub, rate)
                 if check_boundary_crossed(left_boundary, right_boundary, bottom_boundary, upper_boundary):
                     break
                 else:
                     move_robot(speed, 0)  # Move forward
                     pub.publish(move_cmd)
                     rospy.sleep(1)
-                move_robot(0, rad90)  # Turn 90 degrees anticlockwise
-                pub.publish(move_cmd)
-                rospy.sleep(1)
-                move_up = False
+                turn_to_angle(rad90, pub, rate)
                 direction *= -1  # Change the horizontal direction
 
             else:
                 # Turn to change direction
-                rospy.loginfo(f"----------[{turtle_name}] :: Turning right - clockwise..")
-                move_robot(0, -rad90)  # Turn 90 degrees clockwise
-                pub.publish(move_cmd)
-                rospy.sleep(1)
+                print(f"----------[{turtle_name}] :: Turning right - clockwise..")
+                turn_to_angle(-rad90, pub, rate)
                 if check_boundary_crossed(left_boundary, right_boundary, bottom_boundary, upper_boundary):
                     break
                 else:
                     move_robot(speed, 0)  # Move forward
                     pub.publish(move_cmd)
                     rospy.sleep(1)
-                move_robot(0, -rad90)  # Turn 90 degrees clockwise
-                pub.publish(move_cmd)
-                rospy.sleep(1)
+                turn_to_angle(-rad90, pub, rate)
                 direction = 1
+        print("")
+        print(f">>>>> Job Complete!!!. [{turtle_name}] bot Shutting down!!!.")
 
     except rospy.ROSInterruptException:
-        rospy.loginfo(f"Shutting down the [{turtle_name}] bot..")
+        print("")
+        print(f">> Program interrupted !!!!!. Shutting down the [{turtle_name}] bot..")
 
     finally:
         # Stop the turtle when exiting
         move_robot(0, 0)
         pub.publish(move_cmd)
-        rospy.loginfo(f"----- Job Complete!!!. [{turtle_name}] bot Shutting down!!!.")
 
 
 def main():
