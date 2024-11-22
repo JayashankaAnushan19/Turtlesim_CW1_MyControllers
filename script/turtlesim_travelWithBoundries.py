@@ -45,14 +45,16 @@ def checkBoundaryCrossed(direction):
         return False
 
     # Log current and expected position for debugging
-    rospy.loginfo('-----------------------------')
-    rospy.loginfo(f'Current X: {current_pose.x}, Current Y: {current_pose.y}')
-    rospy.loginfo(f'Expected X: {new_x}, Expected Y: {new_y}')
-    rospy.loginfo('-----------------------------')
+    print('---------------------------------------')
+    print(f'Boundries (Y):: Left:{leftBoundary} - Right:{rightBoundary}')
+    print(f'Boundries (X):: Top:{upperBoundary} - Bottom:{bottomBoundary}')
+    print(f'Current X: {current_pose.x}, Current Y: {current_pose.y}')
+    print(f'Expected X: {new_x}, Expected Y: {new_y}')
+    print('---------------------------------------')
 
     # Check if new position is out of bounds
     if new_x <= leftBoundary or new_x >= rightBoundary or new_y <= bottomBoundary or new_y >= upperBoundary:
-        rospy.loginfo('Boundary hit! Cannot move the bot.')
+        print('Warning!!!!! --- Boundary hit! Cannot move the bot!!.')
         return True
     return False
 
@@ -78,38 +80,40 @@ def main():
     move_cmd = Twist()
 
     try:
-        rospy.loginfo("--- Set Boundaries ---")
+        print("--- Set Boundaries ---")
 
         # Get boundary inputs from user
         global leftBoundary
         leftBoundary = int(input("Enter the left boundary (between 0-11): "))
         while leftBoundary < 0 or leftBoundary > 11:
-            rospy.loginfo("Invalid input. Please re-enter the left boundary (0-11).")
+            print("Invalid input. Please re-enter the left boundary (0-11).")
             leftBoundary = int(input("Enter the left boundary (between 0-11): "))
 
         global rightBoundary
         rightBoundary = int(input("Enter the right boundary (larger than left and smaller than 11): "))
         while leftBoundary >= rightBoundary or rightBoundary > 11:
-            rospy.loginfo("Invalid input. Please re-enter the right boundary.")
+            print("Invalid input. Please re-enter the right boundary.")
             rightBoundary = int(input("Enter the right boundary: "))
 
         global bottomBoundary
         bottomBoundary = int(input("Enter the bottom boundary (between 0-11): "))
         while bottomBoundary < 0 or bottomBoundary > 11:
-            rospy.loginfo("Invalid input. Please re-enter the bottom boundary (0-11).")
+            print("Invalid input. Please re-enter the bottom boundary (0-11).")
             bottomBoundary = int(input("Enter the bottom boundary (between 0-11): "))
 
         global upperBoundary
         upperBoundary = int(input("Enter the upper boundary (larger than bottom and smaller than 11): "))
         while bottomBoundary >= upperBoundary or upperBoundary > 11:
-            rospy.loginfo("Invalid input. Please re-enter the upper boundary.")
+            print("Invalid input. Please re-enter the upper boundary.")
             upperBoundary = int(input("Enter the upper boundary: "))
 
-        rospy.loginfo("--- Control Your Turtle! ---")
-        rospy.loginfo("Use 'WASD' or Arrow keys to move the bot.")
-        rospy.loginfo("Press 'Q' or 'P' to quit.")
-        rospy.loginfo("Press 'R' to reset speed.")
-        rospy.loginfo("Press '+' to increase speed, '-' to decrease speed.")
+        print("")
+        print("--- Control Your Turtle! ---")
+        print("Use 'WASD' or Arrow keys to move the bot.")
+        print("Press 'Q' or 'P' to quit.")
+        print("Press 'R' to reset speed.")
+        print("Press '+' to increase speed, '-' to decrease speed.")
+        print("")
 
         # Start the control loop
         while not rospy.is_shutdown():
@@ -134,25 +138,25 @@ def main():
                 # Increase speed
                 elif key == '+':
                     speed += 0.2
-                    rospy.loginfo(f"Speed increased to {speed:.2f}")
+                    print(f"Speed increased to {speed:.2f}")
                     move_cmd.linear.x = 0
                     move_cmd.angular.z = 0
                 # Decrease speed
                 elif key == '-':
                     speed = max(0, speed - 0.2)
-                    rospy.loginfo(f"Speed decreased to {speed:.2f}")
+                    print(f"Speed decreased to {speed:.2f}")
                 # Reset speed
                 elif key == 'r':
                     speed = 1.0
-                    rospy.loginfo("Speed reset to 1.0")
+                    print("Speed reset to 1.0")
                 # Quit
                 elif key in ['q', 'p']:
-                    rospy.loginfo("Exiting...")
+                    print("Exiting...")
                     break
                 # Unrecognized command
                 else:
                     if key not in ['w', 'a', 's', 'd', 'r', 'q', 'p', '+', '-', '\x1b[A', '\x1b[B', '\x1b[D', '\x1b[C']:
-                        rospy.loginfo(f"Unrecognized command: {key}")
+                        print(f"Unrecognized command: {key}")
                     move_cmd.linear.x = 0
                     move_cmd.angular.z = 0
 
@@ -160,7 +164,7 @@ def main():
                 pub.publish(move_cmd)
 
     except Exception as e:
-        rospy.loginfo(f"Error: {e}")
+        print(f"Error: {e}")
 
     finally:
         # Stop the turtle when exiting
