@@ -32,19 +32,24 @@ def main():
     max_speed = 3.0
     move_cmd = Twist()
 
+    print("")
     print("--- Control Your Turtle! ---")
     print("Use 'WASD' or Arrow keys to move the bot")
     print("Press 'Q' or 'P' to quit to main menu.")
     print("Press 'R' to reset speed.")
     print("Press '+' to increase speed, '-' to decrease speed.")
-    
+    print("")
+    print("")
+
     # Shutdown hook to clean up
     def shutdown_hook():
         move_cmd.linear.x = 0
         move_cmd.angular.z = 0
         pub.publish(move_cmd)
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-        print("Shutting down cleanly.")
+        print("")
+        print(">>> Bot Shutting down !!!.")
+        print("")
 
     rospy.on_shutdown(shutdown_hook)
 
@@ -55,15 +60,19 @@ def main():
                 if key in ['w', '\x1b[A']:  # Up (W or Up Arrow)
                     move_cmd.linear.x = speed
                     move_cmd.angular.z = 0
+                    key = 'Up   '
                 elif key in ['s', '\x1b[B']:  # Down (S or Down Arrow)
                     move_cmd.linear.x = -speed
                     move_cmd.angular.z = 0
+                    key = 'Down '
                 elif key in ['a', '\x1b[D']:  # Left (A or Left Arrow)
                     move_cmd.linear.x = 0
                     move_cmd.angular.z = speed
+                    key = 'Left '
                 elif key in ['d', '\x1b[C']:  # Right (D or Right Arrow)
                     move_cmd.linear.x = 0
                     move_cmd.angular.z = -speed
+                    key = 'Right'
                 elif key == '+':  # Increase speed
                     speed = min(max_speed, speed + 0.2)
                     print(f"Speed increased to {speed:.2f}")
@@ -77,17 +86,19 @@ def main():
                     print("Speed reset to 1.0")
                     continue
                 elif key in ['q', 'p']:  # Quit
-                    print("Exiting...")
+                    print("")
+                    print("Stop Command !!!.")
+                    print("Program Exiting...")
                     break
                 else:
-                    print("Unrecognized command")
+                    print("Unrecognized command. Bot Hold !")
                     # Stop movement for unrecognized keys
                     move_cmd.linear.x = 0
                     move_cmd.angular.z = 0
                     continue
 
                 # Display movement and speed details for clarity
-                print(f"Key: {key} | Linear Speed: {move_cmd.linear.x:.2f} | Angular Speed: {move_cmd.angular.z:.2f}")
+                print(f"Key: {key} | Linear Velocity: {move_cmd.linear.x:.2f} | Angular Velocity: {move_cmd.angular.z:.2f}")
 
                 # Publish the movement command
                 pub.publish(move_cmd)
