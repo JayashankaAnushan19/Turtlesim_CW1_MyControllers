@@ -67,7 +67,7 @@ Depending on the key pressed, the script updates the Twist message:
 >>**Task Running file :** `runTask01.launch`
 >>**Video Demostration:** https://youtu.be/iGIUQnQ-exk
 
-**<u>Rqt Graph</u>**
+**<u>Rqt Graph</u>**<br>
 ![Task01](images/Task1.png)
 
 <br>
@@ -136,7 +136,7 @@ If the program exits (e.g., due to an error or user interruption), the finally b
 >>**Task Running file :** `runTask02.launch`
 >>**Video Demostration:** https://youtu.be/L6MxeQGptPI
 
-**<u>Rqt Graph</u>**
+**<u>Rqt Graph</u>**<br>
 ![Task02](images/Task2.png)
 
 <br>
@@ -193,7 +193,7 @@ If the program exits (e.g., due to an error or user interruption), the finally b
 >>**Task Running file :** `runTask03.launch`
 >>**Video Demostration:** https://youtu.be/ts3FB8kSjJo
 
-**<u>Rqt Graph</u>**
+**<u>Rqt Graph</u>**<br>
 ![Task03](images/Task3.png)
 
 <br>
@@ -241,7 +241,7 @@ If the program exits (e.g., due to an error or user interruption), the finally b
 >>**Task Running file :** `runTask04.launch`
 >>**Video Demostration:** https://youtu.be/yg8M-vfaf30
 
-**<u>Rqt Graph</u>**
+**<u>Rqt Graph</u>**<br>
 ![Task04](images/Task4.png)
 
 <br>
@@ -302,7 +302,7 @@ If the program exits (e.g., due to an error or user interruption), the finally b
 >>**Task Running file :** `runTask05.launch`
 >>**Video Demostration:** https://youtu.be/M3XWcjjbYB4
 
-**<u>Rqt Graph</u>**
+**<u>Rqt Graph</u>**<br>
 ![Task05](images/Task5-all.png)
 
 <br>
@@ -312,6 +312,7 @@ All the programs combined to launch files and for execute the task, able to run 
 1. First need to navigate the package using `roscd turtlesim_my_controllers_pde4430_cw1`
 2. Then need to locate launch file folder using `cd launch`
 3. Then as per the task which is need to execute, can be call by using `roslaunch <package name> <launch file>`
+<br>
 - **Example 01** : To run Task-o1; 
 >>`roslaunch turtlesim_my_controllers_pde4430_cw1 runTask01.launch` 
 - **Example 02** : To run Task-o2; 
@@ -321,4 +322,3 @@ All the programs combined to launch files and for execute the task, able to run 
 
 ## Reference
 http://wiki.ros.org/turtlesim
-https://stackoverflow.com/questions/954834/how-do-i-use-raw-input-in-python-3
