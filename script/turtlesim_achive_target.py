@@ -29,7 +29,10 @@ def direct_distance(target_pose):
 
 def linear_vel(target_pose, constant=1.5):
     # Calculate the linear speed based on the distance to the target
-    return constant * direct_distance(target_pose)
+    if direct_distance(target_pose) < constant:
+        return direct_distance(target_pose)
+    else:
+        return constant * direct_distance(target_pose)
 
 def steering_angle(target_pose):
     # Calculate the angle (theta) to the target
@@ -58,15 +61,16 @@ def main():
                 print("Invalid input. Please re-enter the y-goal (Between 0 and 11).")
                 target_pose.y = float(input("Enter the y goal (Between 0 to 11): "))
 
-            distance_tolerance = 0.01  # You can adjust this tolerance as per your requirement
+            distance_tolerance = 0.01  # Tolerance to the target
             
             # Move towards the target while within tolerance
             while direct_distance(target_pose) >= distance_tolerance:
-                print(f"Moving towards goal: Distance remaining = {direct_distance(target_pose)}")
-                
+
                 # Set linear and angular velocities
                 vel_msg.linear.x = linear_vel(target_pose)
                 vel_msg.angular.z = angular_vel(target_pose)
+                # print(f"Remain Distance : {direct_distance(target_pose)} Current X: {vel_msg.linear.x} || Z: {vel_msg.angular.z}")
+                print(f"--- Moving forward. Linear X: {round(vel_msg.linear.x, 7)} || Angular Z: {round(vel_msg.angular.z, 7)}")
 
                 # Publish velocity message
                 target_publisher.publish(vel_msg)
@@ -74,8 +78,11 @@ def main():
                 # Sleep to maintain the loop rate
                 rate.sleep()
 
-            print("Target reached. Stopping the robot.")
-            
+            print("")
+            print(">>>>> Target reached. Stopping the robot.!!!")
+            print("")
+            print("--------------------------------------------")
+
             # Stop the robot once target is reached
             vel_msg.linear.x = 0
             vel_msg.angular.z = 0
